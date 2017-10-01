@@ -1,6 +1,8 @@
-﻿<?php
+<?php
 require_once "includes/config.php";
 require_once "includes/functions.php";
+
+session_start();
 
 $page = (int)$_GET["page"];
 if(!$page || $page <= 0)
@@ -36,7 +38,10 @@ if(!$articles)
 				<a href="article.php?article='.$article["id"].'">
 					<h2>'.$article["title"].'</h2>
 			</a>
-				<div class="addTime">Добавлено: '.date_format(date_create($article["date"]), "H:i d-m-Y").'</div>
+				<div class="addTime">
+					Добавлено: '.date_format(date_create($article["date"]), "H:i d-m-Y").'<br/><br/>
+					Автор: <strong>'.$article["login"].'</strong>
+				</div>
 			</div>';
 		}
 		?>

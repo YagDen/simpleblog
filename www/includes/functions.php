@@ -1,9 +1,16 @@
-﻿<?php
+<?php
+require_once "config.php";
+
 	$db = false;
+	
 	function connectDB()
 	{
+		global $DBhost;
+		global $DBlogin;
+		global $DBpassword;
+		global $DBname;
 		global $db;
-		$db = new mysqli("localhost", "root", "", "simpleblog");
+		$db = new mysqli($DBhost, $DBlogin, $DBpassword, $DBname);
 		$db->query("SET NAMES 'utf8'");
 	}
 	
@@ -24,7 +31,9 @@
 	{
 		global $db;
 		connectDB();
-		$res = $db->query("SELECT id, title, date FROM articles ORDER BY id DESC LIMIT $start, $limit");
+		$res = $db->query("SELECT articles.id AS id, title, date, login 
+							FROM articles LEFT JOIN users ON articles.user_id = users.id 
+							ORDER BY id DESC LIMIT $start, $limit");
 		closeDB();
 		return toArray($res);
 	}
@@ -33,7 +42,8 @@
 	{
 		global $db;
 		connectDB();
-		$res = $db->query("SELECT * FROM articles WHERE id = $id");
+		$res = $db->query("SELECT articles.id AS id, title, date, text, login 
+							FROM articles LEFT JOIN users ON articles.user_id = users.id WHERE articles.id = $id");
 		closeDB();
 		return $res->fetch_assoc();
 	}
@@ -107,5 +117,67 @@
 			$pagination .= "<a href=\"index.php?page=".$next."\">&rArr;</a>";
 		}
 		return $pagination;
+	}
+	
+	function filterLogin($login)
+	{
+		$login = trim($login);
+		$login = strip_tags($login);
+		$login = htmlspecialchars($login);
+		return mysql_escape_string($login);
+	}
+	
+	function filterText($text)
+	{
+		$text = get_magic_quotes_gpc() ? $text : addslashes($text);
+		return $text;
+	}
+	
+	function decodeText($text)
+	{
+		$text = get_magic_quotes_gpc() ? stripslashes($text) : $text;
+		return $text;
+	}
+	
+	function checkLogin($login)
+	{
+		global $db;
+		connectDB();
+		$res = $db->query("SELECT COUNT(id) FROM users WHERE login = '$login'");
+		closeDB();
+		$result = $res->fetch_row();
+		return $result[0];
+	}
+	
+	function getUserID($login, $pass)
+	{
+		global $db;
+		connectDB();
+		$res = $db->query("SELECT id FROM users WHERE login = '$login' AND password = '".md5($pass)."'");
+		closeDB();
+		$result = $res->fetch_assoc();
+		return $result['id'];
+	}
+	
+	function addUser($login, $pass)
+	{
+		global $db;
+		connectDB();
+		$res = $db->query("INSERT INTO users SET login='$login', password='".md5($pass)."'");
+		$id = $db->insert_id;
+		closeDB();
+		return $id;
+	}
+	
+	function addArticle($title, $text, $user_id)
+	{
+		global $db;
+		connectDB();
+		$title = mysql_escape_string($title);
+		$text = mysql_escape_string($text);
+		$res = $db->query("INSERT INTO articles SET title='$title', text='$text', user_id=$user_id");
+		$id = $db->insert_id;
+		closeDB();
+		return $id;
 	}
 ?>

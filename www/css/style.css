@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 
 * {
 	margin: 0;
@@ -40,6 +40,18 @@ header #logo a {
 	color: #333333;
 }
 
+header #auth {
+	float: right;
+	margin-top: -35px;
+	text-align: center;
+}
+
+header #auth img {
+	width: 20px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
 #articleList {
 	float: left;
 	width: 96%;
@@ -49,8 +61,46 @@ header #logo a {
 	padding: 10px;
 	border: 2px solid silver;
 	border-radius: 15px;
-	min-height: 80%;
+	min-height: 80vh;
 	position: relative;
+}
+
+#articleList #regForm {
+	width: 20%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#articleList #regForm textarea {
+	resize: none;
+}
+
+#articleList #errorMessage {
+	color: red;
+	font-size: 0.8em;
+}
+
+#articleList #regForm fieldset {
+	padding: 10px;
+	border-radius: 15px;
+}
+
+#articleList #regForm input {
+	margin-right: 10px;
+	width: 70%;
+}
+
+input[type=submit] {
+	background-color: #ffd9b3;
+	border: 1px solid #ffbf80;
+	text-decoration: none;
+	color: #333333;
+}
+
+input[type=submit]:hover {
+	background-color: #ffcc00;
+	cursor:pointer;
 }
 
 #articleList #pagination {
