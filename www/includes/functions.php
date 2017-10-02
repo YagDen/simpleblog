@@ -1,22 +1,15 @@
 <?php
 require_once "config.php";
 
-	$db = false;
-	
-	function connectDB()
+	function connectDB($DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $DBhost;
-		global $DBlogin;
-		global $DBpassword;
-		global $DBname;
-		global $db;
 		$db = new mysqli($DBhost, $DBlogin, $DBpassword, $DBname);
 		$db->query("SET NAMES 'utf8'");
+		return $db;
 	}
 	
-	function closeDB()
+	function closeDB($db)
 	{
-		global $db;
 		$db->close();
 	}
 	
@@ -27,33 +20,30 @@ require_once "config.php";
 		return $arr;
 	}
 	
-	function getArticleList($start, $limit)
+	function getArticleList($start, $limit, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("SELECT articles.id AS id, title, date, login 
 							FROM articles LEFT JOIN users ON articles.user_id = users.id 
 							ORDER BY id DESC LIMIT $start, $limit");
-		closeDB();
+		closeDB($db);
 		return toArray($res);
 	}
 	
-	function getArticleById($id)
+	function getArticleById($id, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("SELECT articles.id AS id, title, date, text, login 
 							FROM articles LEFT JOIN users ON articles.user_id = users.id WHERE articles.id = $id");
-		closeDB();
+		closeDB($db);
 		return $res->fetch_assoc();
 	}
 	
-	function countArticles()
+	function countArticles($DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("SELECT COUNT(id) FROM articles");
-		closeDB();
+		closeDB($db);
 		$result = $res->fetch_row();
 		return $result[0];
 	}
@@ -63,9 +53,9 @@ require_once "config.php";
 		return ($page - 1) * $limit;
 	}
 	
-	function pagination($page, $limit, $nearPagesCount)
+	function pagination($page, $limit, $nearPagesCount, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		$numPages = ceil(countArticles() / $limit);
+		$numPages = ceil(countArticles($DBhost, $DBlogin, $DBpassword, $DBname) / $limit);
 		if($numPages == 1)
 			return;
 		if($page > $numPages)
@@ -139,45 +129,41 @@ require_once "config.php";
 		return $text;
 	}
 	
-	function checkLogin($login)
+	function checkLogin($login, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("SELECT COUNT(id) FROM users WHERE login = '$login'");
-		closeDB();
+		closeDB($db);
 		$result = $res->fetch_row();
 		return $result[0];
 	}
 	
-	function getUserID($login, $pass)
+	function getUserID($login, $pass, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("SELECT id FROM users WHERE login = '$login' AND password = '".md5($pass)."'");
-		closeDB();
+		closeDB($db);
 		$result = $res->fetch_assoc();
 		return $result['id'];
 	}
 	
-	function addUser($login, $pass)
+	function addUser($login, $pass, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$res = $db->query("INSERT INTO users SET login='$login', password='".md5($pass)."'");
 		$id = $db->insert_id;
-		closeDB();
+		closeDB($db);
 		return $id;
 	}
 	
-	function addArticle($title, $text, $user_id)
+	function addArticle($title, $text, $user_id, $DBhost, $DBlogin, $DBpassword, $DBname)
 	{
-		global $db;
-		connectDB();
+		$db = connectDB($DBhost, $DBlogin, $DBpassword, $DBname);
 		$title = mysql_escape_string($title);
 		$text = mysql_escape_string($text);
 		$res = $db->query("INSERT INTO articles SET title='$title', text='$text', user_id=$user_id");
 		$id = $db->insert_id;
-		closeDB();
+		closeDB($db);
 		return $id;
 	}
 ?>

@@ -16,7 +16,7 @@ if(isset($_POST["enter"]))
 	
 	if(!$error)
 	{
-		if(!$id = getUserID($login, $pass))
+		if(!$id = getUserID($login, $pass, $DBhost, $DBlogin, $DBpassword, $DBname))
 			$error .= "<p>Не верное имя пользователя или пароль!</p>";
 		else
 		{

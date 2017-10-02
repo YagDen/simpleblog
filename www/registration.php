@@ -20,11 +20,11 @@ if(isset($_POST["register"]))
 	
 	if(!$error)
 	{
-		if(checkLogin($login))
+		if(checkLogin($login, $DBhost, $DBlogin, $DBpassword, $DBname))
 			$error .= "<p>Пользователь с таким логином уже зарегистрирован!</p>";
 		else
 		{
-			if(!$id = addUser($login, $pass))
+			if(!$id = addUser($login, $pass, $DBhost, $DBlogin, $DBpassword, $DBname))
 				$error .= "<p>Во время регистрации произошла ошибка. Пожалуйста, повторите попытку позже!</p>";
 			else
 			{

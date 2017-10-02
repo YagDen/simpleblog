@@ -22,7 +22,7 @@ if(isset($_POST["add"]))
 	
 	if(!$error)
 	{
-		if(!$article_id = addArticle($articleTitle, $text, $_SESSION['user_id']))
+		if(!$article_id = addArticle($articleTitle, $text, $_SESSION['user_id'], $DBhost, $DBlogin, $DBpassword, $DBname))
 			$error .= "<p>Во время добавления статьи возникли ошибки. Пожалуйста, повторите попытку позже!</p>";
 		else
 		{

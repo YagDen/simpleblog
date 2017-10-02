@@ -9,12 +9,12 @@ if(!$page || $page <= 0)
 	$page = 1;
 $start = getStart($page, $articlesPerPage);
 require_once "includes/functions.php";
-$articles = getArticleList($start, $articlesPerPage);
+$articles = getArticleList($start, $articlesPerPage, $DBhost, $DBlogin, $DBpassword, $DBname);
 if(!$articles)
 {
 	$page = 1;
 	$start = getStart($page, $articlesPerPage);
-	$articles = getArticleList($start, $articlesPerPage);
+	$articles = getArticleList($start, $articlesPerPage, $DBhost, $DBlogin, $DBpassword, $DBname);
 }
 if(!$articles)
 	exit("Вероятно база данных пуста!");
@@ -45,7 +45,7 @@ if(!$articles)
 			</div>';
 		}
 		?>
-			<div id="pagination"><?=pagination($page, $articlesPerPage, $nearPagesCount);?></div>
+			<div id="pagination"><?=pagination($page, $articlesPerPage, $nearPagesCount, $DBhost, $DBlogin, $DBpassword, $DBname);?></div>
 		</div>
 		
 		<?php require_once "includes/footer.php"; ?>
