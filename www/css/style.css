@@ -1,183 +1,179 @@
 @charset "utf-8";
 
 * {
-	margin: 0;
-	padding: 0;
-	outline: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
 }
 
 html {
-	color: #333333;
-	background-color: #dddddd;
-	font-family: Times New Roman, sans-serif;
+    color: #333333;
+    background-color: #dddddd;
+    font-family: Times New Roman, sans-serif;
 }
 
 a {
-	color: #333333;
+    color: #333333;
 }
 
 a:hover {
-	color: #aa3333;
+    color: #aa3333;
 }
 
 header {
-	width: 96%;
-	float: left;
-	padding: 10px;
-	margin: 10px;
-	border: 2px solid silver;
-	background-color: #8193C7;
-	border-radius: 15px;
+    width: 96%;
+    float: left;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid silver;
+    background-color: #8193C7;
+    border-radius: 15px;
 }
 
 header #logo {
-	font-size: 3em;
-	text-align: center;
+    font-size: 3em;
+    text-align: center;
 }
 
 header #logo a {
-	text-decoration: none;
-	color: #333333;
+    text-decoration: none;
+    color: #333333;
 }
 
 header #auth {
-	float: right;
-	margin-top: -35px;
-	text-align: center;
+    float: right;
+    margin-top: -35px;
+    text-align: center;
 }
 
 header #auth img {
-	width: 20px;
-	cursor: pointer;
-	margin-top: 5px;
+    width: 20px;
+    cursor: pointer;
+    margin-top: 5px;
 }
 
 #articleList {
-	float: left;
-	width: 96%;
-	background-color: #cccccc;
-	margin-right: 10px;
-	margin-left: 10px;
-	padding: 10px;
-	border: 2px solid silver;
-	border-radius: 15px;
-	min-height: 80vh;
-	position: relative;
+    float: left;
+    width: 96%;
+    background-color: #cccccc;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 2px solid silver;
+    border-radius: 15px;
+    min-height: 80vh;
+    position: relative;
 }
 
 #articleList #regForm {
-	width: 20%;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 #articleList #regForm textarea {
-	resize: none;
+    resize: none;
 }
 
 #articleList #errorMessage {
-	color: red;
-	font-size: 0.8em;
+    color: red;
+    font-size: 0.8em;
 }
 
 #articleList #regForm fieldset {
-	padding: 10px;
-	border-radius: 15px;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 #articleList #regForm input {
-	margin-right: 10px;
-	width: 70%;
+    margin-right: 10px;
+    width: 70%;
 }
 
 input[type=submit] {
-	background-color: #ffd9b3;
-	border: 1px solid #ffbf80;
-	text-decoration: none;
-	color: #333333;
+    background-color: #ffd9b3;
+    border: 1px solid #ffbf80;
+    text-decoration: none;
+    color: #333333;
 }
 
 input[type=submit]:hover {
-	background-color: #ffcc00;
-	cursor:pointer;
+    background-color: #ffcc00;
+    cursor: pointer;
 }
 
 #articleList #pagination {
-	position: absolute;
-	bottom: 10px;
-	right: 45%;
+    position: absolute;
+    bottom: 10px;
+    right: 45%;
 }
 
 #articleList #pagination * {
-	padding: 3px 7px 3px 7px;
-	margin: 2px;
-	border-radius: 7px;
+    padding: 3px 7px 3px 7px;
+    margin: 2px;
+    border-radius: 7px;
 }
 
 #articleList #pagination a {
-	background-color: #ffd9b3;
-	border: 1px solid #ffbf80;
-	text-decoration: none;
-	color: #333333;
+    background-color: #ffd9b3;
+    border: 1px solid #ffbf80;
+    text-decoration: none;
+    color: #333333;
 }
 
 #articleList #pagination a:hover {
-	background-color: #ffcc00;
-}
-
-#articleList #pagination #curPage {
-	background-color: #804000;
-	border: 1px solid #602020;
-	color: #aaaaaa;
+    background-color: #ffcc00;
 }
 
 #articleList .articleReview {
-	border: 1px solid #555555;
-	border-radius: 10px;
-	margin-bottom: 10px;
-	padding: 20px;
-	text-align: center;
+    border: 1px solid #555555;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    text-align: center;
 }
 
-#articleList .articleReview .articleHead{
-	margin-left: 10%;
+#articleList .articleReview .articleHead {
+    margin-left: 10%;
 }
 
 #articleList .articleReview .articleBody {
-	text-align: left;
-	margin-top: 10px;
+    text-align: left;
+    margin-top: 10px;
 }
 
 #articleList .articleReview .articleBody p {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #articleList .articleReview a {
-	text-decoration: none;
-	margin-left: 10%;
+    text-decoration: none;
+    margin-left: 10%;
 }
+
 #articleList .articleReview h2 {
-	display: inline-block;
+    display: inline-block;
 }
 
 #articleList .articleReview .addTime {
-	float: right;
-	color: #888888;
-	font-size: 0.7em;
+    float: right;
+    color: #888888;
+    font-size: 0.7em;
 }
 
 footer {
-	width: 96%;
-	float: left;
-	padding: 10px;
-	margin: 10px;
-	border: 2px solid silver;
-	background-color: #8193C7;
-	border-radius: 15px;
+    width: 96%;
+    float: left;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid silver;
+    background-color: #8193C7;
+    border-radius: 15px;
 }
+
 footer div {
-	font-family: Times New Roman, sans-serif;
-	font-size: 1em;
-	text-align: center;
+    font-family: Times New Roman, sans-serif;
+    font-size: 1em;
+    text-align: center;
 }
