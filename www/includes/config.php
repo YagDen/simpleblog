@@ -34,4 +34,3 @@ $minPasswordLng = 4;
  * @var int $minTitleLng минимальное количество символов в названии статьи
  */
 $minTitleLng = 3;
-?>

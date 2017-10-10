@@ -5,4 +5,3 @@ require_once "includes/functions.php";
 session_start();
 
 $db = connectDB($dbHost, $dbLogin, $dbPassword, $dbName);
-?>

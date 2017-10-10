@@ -182,5 +182,3 @@ function addArticle($db, $title, $text, $user_id)
     $db->query("INSERT INTO articles SET title='$title', text='$text', user_id=$user_id");
     return $db->insert_id;
 }
-
-?>

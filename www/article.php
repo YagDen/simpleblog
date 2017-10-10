@@ -14,4 +14,3 @@ require_once "templates/header.tpl.php";
 include "templates/viewArticle.tpl.php";
 
 require_once "templates/footer.tpl.php";
-?>
