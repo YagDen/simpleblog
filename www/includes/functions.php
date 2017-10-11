@@ -1,33 +1,4 @@
 <?php
-require_once "config.php";
-
-/**
- * Создание подключения к базе данных
- * @param string $dbHost хост для подключения к базе данных
- * @param string $dbLogin имя пользователя для подключения к базе данных
- * @param string $dbPassword пароль для подключения к базе данных
- * @param string $dbName название базы данных
- * @return object подключение к базе данных
- */
-function connectDB($dbHost, $dbLogin, $dbPassword, $dbName)
-{
-    $db = new mysqli($dbHost, $dbLogin, $dbPassword, $dbName);
-    $db->query("SET NAMES 'utf8'");
-    return $db;
-}
-
-/**
- * Возвращает массив результатов выборки
- * @param object $res результат запроса к базе данных
- * @return array массив результатов выборки
- */
-function toArray($res)
-{
-    $arr = array();
-    while ($row = $res->fetch_assoc())
-        $arr[] = $row;
-    return $arr;
-}
 
 /**
  * Получение списка статей на главной
@@ -38,10 +9,9 @@ function toArray($res)
  */
 function getArticleList($db, $start, $limit)
 {
-    $res = $db->query("SELECT articles.id AS id, title, date, login 
+    return $db->queryAll("SELECT articles.id AS id, title, date, login 
 							FROM articles LEFT JOIN users ON articles.user_id = users.id 
 							ORDER BY id DESC LIMIT $start, $limit");
-    return toArray($res);
 }
 
 /**
@@ -52,9 +22,8 @@ function getArticleList($db, $start, $limit)
  */
 function getArticleById($db, $id)
 {
-    $res = $db->query("SELECT articles.id AS id, title, date, text, login 
+    return $db->queryOne("SELECT articles.id AS id, title, date, text, login 
 							FROM articles LEFT JOIN users ON articles.user_id = users.id WHERE articles.id = $id");
-    return $res->fetch_assoc();
 }
 
 /**
@@ -102,7 +71,7 @@ function filterLogin($db, $login)
     $login = trim($login);
     $login = strip_tags($login);
     $login = htmlspecialchars($login);
-    return mysqli_escape_string($db, $login);
+    return $db->mysqli_escape_string($login);
 }
 
 /**
@@ -149,8 +118,7 @@ function checkLogin($db, $login)
  */
 function getUserID($db, $login, $pass)
 {
-    $res = $db->query("SELECT id FROM users WHERE login = '$login' AND password = '" . md5($pass) . "'");
-    $result = $res->fetch_assoc();
+    $result = $db->queryOne("SELECT id FROM users WHERE login = '$login' AND password = '" . md5($pass) . "'");
     return $result['id'];
 }
 
@@ -164,7 +132,7 @@ function getUserID($db, $login, $pass)
 function addUser($db, $login, $pass)
 {
     $db->query("INSERT INTO users SET login='$login', password='" . md5($pass) . "'");
-    return $db->insert_id;
+    return $db->insert_id();
 }
 
 /**
@@ -177,8 +145,8 @@ function addUser($db, $login, $pass)
  */
 function addArticle($db, $title, $text, $user_id)
 {
-    $title = mysqli_escape_string($db, $title);
-    $text = mysqli_escape_string($db, $text);
+    $title = $db->mysqli_escape_string($title);
+    $text = $db->mysqli_escape_string($text);
     $db->query("INSERT INTO articles SET title='$title', text='$text', user_id=$user_id");
-    return $db->insert_id;
+    return $db->insert_id();
 }

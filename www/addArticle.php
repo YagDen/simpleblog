@@ -19,7 +19,11 @@ if ($add && empty($text))
     $errors[] = "Введите текст статьи!";
 
 $add2 = $add && empty($errors);
-if ($add2 && (!$article_id = addArticle($db, $articleTitle, $text, $_SESSION['user_id'])))
+$article_id = false;
+if ($add2) {
+    $article_id = addArticle($db, $articleTitle, $text, $_SESSION['user_id']);
+}
+if ($add2 && !$article_id)
     $errors[] = "Во время добавления статьи возникли ошибки. Пожалуйста, повторите попытку позже!";
 elseif ($add2) {
     header('Location: /article.php?article=' . $article_id);
